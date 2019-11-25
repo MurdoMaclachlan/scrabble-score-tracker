@@ -10,7 +10,7 @@ END IF
 FUNCTION index
   DECLARE setupDOne AS False AND i AS 1
   RENDER index.html
-  END FUNCTION
+END FUNCTION
 
 FUNCTION setup
   RECEIVE x FROM user VIA form
@@ -32,4 +32,89 @@ FUNCTION setup
         APPENd blank string TO colours
       END IF
     END FOR
-    RENDER gameRound.html WITH (
+    RENDER gameRound.html WITH (scoreInpyts[0] AS input1), (scoreInputs[1] AS input2), (scoreInputs[2] AS input3), (scoreInputs[3] AS input4), (inputTypes[0] AS type1), (inputTypes[1] AS type2), (inputTypes[2] AS type3), (inputTypes[3] AS type4), (colours[0]   AS colour1), (colours[1] AS colour2), (colours[2] AS colour3), (colours[3] AS colour4), (breaks[0] AS break1), (breaks[1] AS break2), (breaks[2] AS break3), (breaks[3] AS break4), (roundNumber AS roundNumber)
+  ELSE
+    SET setupDOne TO True
+    RENDER playerSetup.html WITH (i AS i, str(x) AS x)
+  END IF
+END FUNCTION
+
+FUNCTION doSetup WITH ARGUMENTS players, i
+  RECEIVE name FROM user VIA form
+  RECEIVE colour FROM user VIA form
+  DECLARE score AS 0
+  DECLARE y AS INTSANCE OF PLayers WITH (name, colour, score, i) INITIALLY
+  APPEND y TO players
+END FUNCTION
+
+FUNCTION game
+  RECEIVE continueLoop FROM user VIA form
+  IF roundNUmber NOT A VARIABLE THEN
+    DECALRE roundNumber AS 0
+  END IF
+  INCREMENT roundNumber BY 1
+  FOR counter FROM 0 TO length OF players DO
+    RECEIVE new score FROM user VIA form
+    INCREMENT score OF player[counter] BY new score
+  END FOR
+  IF continueLOop IS True THEN
+    RENDER gameRound.html WITH
+  ELSE
+    RENDER negativeRond.html WITH
+  END IF
+END FUNCTION
+
+FUNCTION end
+  FOR counter FROM 0 TO length OF players DO
+    RECEIVE negative FROM user VIA form
+    DECREMENT score OF player[counter] BY negative
+  END FOR
+  SET players AND winners AND winscores TO RESULT OF calculateWinner(players)
+  DECALRE listPLayers AND listScores AND winColours AND winnerSCores AND listWinners AND winBreaks AND dashes AND winDashes AS empty list
+  CLEAR list colours
+  FOR conter FROM 1 to 4 DO
+    IF counter IS LESS THAN OR EQUAL TO THE LENGTH OF players MINUS 1 THEN
+      APPEND name OF player[counter] TO listPLayers
+      APPEND score OF player[counter] TO listScores
+      APPEND colour OF player[cointer] TO colours
+      APPEND "-" TO dashes
+    ELSE
+      APPEND blank string TO listPLayers
+      APPEND blank string TO listSCores
+      APPEND blank string TO colours
+      APPENd blank string TO dashes
+    END IF
+    IF counter IS LESS THAN OR EQUAL TO THE LENGTH OF winners MINUS 1 THEN
+      DECLARE pos AS RESULT OF linearSearch(players, winners[counter])
+      APPEND name OF players[pos] TO listWinners
+      APPEND score OF players[pos] TO winnerScores
+      APPEND colours OF players[pos] TO winCOlours
+      APPEND "</br>" TO winBreaks
+      APPEND "-" TO winDashes
+    ELSE
+      APPEND blank string TO listWinners
+      APPEND blank string TO winnerScores
+      APPEND blank string TO winColours
+      APPENd blank string TO winBreaks
+      APPENd blank string to winDashes
+    END IF
+  END FOR
+  RENDER end.html
+END FUNCTION
+
+#other
+CREATE CLASS PLayers WITH ATTRIBUTES (name, colour, score, i)
+
+FUNCTION doSetup(players, i)
+  RECEIVE name FROM user VIA form
+  RECEIVE colour FROM user VIA form
+  DECLARE score AS 0
+  DECLARE y AS INSTANCE OF CLASS PLayers
+  APPEND y TO players
+END FUNCTION
+
+FUNCTION bubbleSort(nArray)
+  FOR counter1 FROM LENGTH OF nArray MINUS 1 TO 0 AND -1 DO
+    FOR counter2 FROM 1 TO counter1 DO
+      IF score OF nArray[counter2] IS GREATER THAN score OF nArray[counter2 PLUS 1] THEN
+      
