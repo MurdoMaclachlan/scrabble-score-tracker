@@ -1,0 +1,35 @@
+#flask-only
+DECLARE app AS Flask(__name__)
+
+IF __name__ IS "__main__" THEN
+  DECLARE players AS empty list
+  RUN app WITH host AS "clocalhost" AND port AS 3000
+END IF
+
+#top-level
+FUNCTION index
+  DECLARE setupDOne AS False AND i AS 1
+  RENDER index.html
+  END FUNCTION
+
+FUNCTION setup
+  RECEIVE x FROM user VIA form
+  IF setupDone IS True THEN
+    CALL doSetup(players,i)
+    INCREMENT i BY 1
+  END IF
+  IF i IS GREATER THAN x THEN
+    DECLARE scoreInputs AND inputTYpes AND colours AND breaks AND roundNUmber AS empty list
+    FOR counter FROM 1 to 10 DO
+      IF counter IS LESS THAN OR EQUAL TO THE LENGTH OF players MINUS 1 THEN
+        APPEND player name TO scoreINputs
+        APPEND number to inputTypes
+        APPEnd player colour to colours
+        APPEND </br> TO breaks
+       ELSE
+        APPEND blank string TO scoreINputs
+        APPEND hidden TO inputTypes
+        APPENd blank string TO colours
+      END IF
+    END FOR
+    RENDER gameRound.html WITH (
