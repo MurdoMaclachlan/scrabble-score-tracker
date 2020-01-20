@@ -117,4 +117,37 @@ FUNCTION bubbleSort(nArray)
   FOR counter1 FROM LENGTH OF nArray MINUS 1 TO 0 AND -1 DO
     FOR counter2 FROM 1 TO counter1 DO
       IF score OF nArray[counter2] IS GREATER THAN score OF nArray[counter2 PLUS 1] THEN
-      
+        DECLARE temp AS nArray[counter2]
+        SET nArray[counter2] TO nArray[counter2 PLUS 1]
+        SET nArray[counter2 PLUS 1] TO render_template
+      END IF
+    END FOR
+  END FOR
+END FUNCTION
+
+FUNCTION binarySearch(nArray, target)
+  DECLARE first AS 0
+  DECLARE last AS LENGTH OF nArray MINUS 1
+  DECLARE found AS False
+  REPEAT
+    DECLARE midpoint AS first PLUS last DIVIDED by 2 ROUNDED TO THE NEAREST WHOLE NUMBER
+    IF idnum OF nArray[imidpoint] EQUALS target THEN
+      SET found TO True
+    ELSE
+      IF target IS LESS THAN idnum OF nArray[midpoint] THEN
+        SET last TO midpoint MINUS 1
+      ELSE
+        SET first TO midpoint PLUS 1
+      END IF
+    END IF
+  UNTIL frist IS LESS THAN OR EQUAL TO last OR found EQUALS True
+END FUNCTION
+
+FUNCTION linearSearch(nArray, target)
+  DECLARE pos AS 0
+  FOR counter FROM 1 TO LENGTH OF nArray DO
+    IF name OF nArray[counter] EQUALS target THEN
+      SET pos TO Counter
+    END IF
+  END FOR
+END FUNCTION
