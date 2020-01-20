@@ -14,14 +14,14 @@
         <p> Please enter the details for player {{ i }}. </p>
         <div class="form">
           <form action="/setup" method="post">
-            <input type="hidden" name="number" value={{ x }}>
+            <input type="hidden" name="number" value={{ j }}>
             Name:</br>
             <input type="text" name="name"></br>
             Colour:</br>
-            <input type="radio" name="colour" value="blue">Blue</br>
-            <input type="radio" name="colour" value="green">Green</br>
-            <input type="radio" name="colour" value="red">Red</br>
-            <input type="radio" name="colour" value="yellow">Yellow</br></br>
+            <input type="radio" name="colour" value="blue" required>Blue</br>
+            <input type="radio" name="colour" value="green" required>Green</br>
+            <input type="radio" name="colour" value="red" required>Red</br>
+            <input type="radio" name="colour" value="yellow" required>Yellow</br></br>
             <input type="submit">
           </form>
         </div>
