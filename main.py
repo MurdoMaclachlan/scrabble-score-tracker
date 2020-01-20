@@ -7,21 +7,22 @@ app = Flask(__name__)
 @app.route("/")
 @app.route("/index")
 def index():
-    global i,setupDone
+    global i,setupDone,players
     setupDone = False
     i = 1
+    players = []
     return render_template("index.html")
 
 @app.route("/setup", methods=["POST"])
 def setup():
     global i,setupDone,players
-    x = int(request.form["number"])
+    j = int(request.form["number"])
     if setupDone == True:
         libsst.doSetup(players, i)
         i += 1
-    if i > x:
-        loop = True
-        global scoreInputs,inputTypes,colours,breaks,roundNumber
+    if i > j:
+        global playerIds,scoreInputs,inputTypes,colours,breaks,roundNumber
+        playerIds = []
         scoreInputs = []
         inputTypes = []
         colours = []
@@ -29,6 +30,7 @@ def setup():
         roundNumber = 1
         for i in range(4):
             if i <= len(players)-1:
+                playersIds.append(players[i].idnum)
                 scoreInputs.append(players[i].name)
                 inputTypes.append("number")
                 colours.append(players[i].colour)
@@ -38,30 +40,28 @@ def setup():
                 inputTypes.append("hidden")
                 colours.append("")
                 breaks.append("")
-        return render_template("gameRound.html", loop=loop, input1=scoreInputs[0], input2=scoreInputs[1], input3=scoreInputs[2], input4=scoreInputs[3], type1=inputTypes[0], type2=inputTypes[1], type3=inputTypes[2], type4=inputTypes[3], colour1=colours[0], colour2=colours[1], colour3=colours[2], colour4=colours[3], break1=breaks[0], break2=breaks[1], break3=breaks[2], break4=breaks[3], roundNumber=roundNumber)
+        return render_template("gameRound.html", id1=playerIds[0], id2=playerIds[1], id3=playerIds[2], id4=playerIds[3], input1=scoreInputs[0], input2=scoreInputs[1], input3=scoreInputs[2], input4=scoreInputs[3], type1=inputTypes[0], type2=inputTypes[1], type3=inputTypes[2], type4=inputTypes[3], colour1=colours[0], colour2=colours[1], colour3=colours[2], colour4=colours[3], break1=breaks[0], break2=breaks[1], break3=breaks[2], break4=breaks[3], roundNumber=roundNumber)
     else:
         setupDone = True
-        return render_template("playerSetup.html", i=i, x=str(x))
+        return render_template("playerSetup.html", i=i, j=str(j))
 
 @app.route("/game", methods=["POST"])
 def game():
-    global scoreInputs,inputTypes,colours,players,breaks,roundNumber
-    loop = request.form["loop"]
+    global playerIds,scoreInputs,inputTypes,colours,players,breaks,roundNumber
     continueLoop = request.form["continue"]
     roundNumber += 1
     for i in range(len(players)):
-        players[i].score = players[i].score + int(request.form[players[i].name])
+        players[i].score = players[i].score + int(request.form[players[i].idnum])
     if continueLoop == "True":
-        return render_template("gameRound.html", loop=loop, input1=scoreInputs[0], input2=scoreInputs[1], input3=scoreInputs[2], input4=scoreInputs[3], type1=inputTypes[0], type2=inputTypes[1], type3=inputTypes[2], type4=inputTypes[3], colour1=colours[0], colour2=colours[1], colour3=colours[2], colour4=colours[3], break1=breaks[0], break2=breaks[1], break3=breaks[2], break4=breaks[3], roundNumber=roundNumber)
+        return render_template("gameRound.html", id1=playerIds[0], id2=playerIds[1], id3=playerIds[2], id4=playerIds[3], input1=scoreInputs[0], input2=scoreInputs[1], input3=scoreInputs[2], input4=scoreInputs[3], type1=inputTypes[0], type2=inputTypes[1], type3=inputTypes[2], type4=inputTypes[3], colour1=colours[0], colour2=colours[1], colour3=colours[2], colour4=colours[3], break1=breaks[0], break2=breaks[1], break3=breaks[2], break4=breaks[3], roundNumber=roundNumber)
     else:
-        loop = False
-        return render_template("negativeRound.html", loop=loop, input1=scoreInputs[0], input2=scoreInputs[1], input3=scoreInputs[2], input4=scoreInputs[3], type1=inputTypes[0], type2=inputTypes[1], type3=inputTypes[2], type4=inputTypes[3], colour1=colours[0], colour2=colours[1], colour3=colours[2], colour4=colours[3], break1=breaks[0], break2=breaks[1], break3=breaks[2], break4=breaks[3])
+        return render_template("negativeRound.html", id1=playerIds[0], id2=playerIds[1], id3=playerIds[2], id4=playerIds[3], input1=scoreInputs[0], input2=scoreInputs[1], input3=scoreInputs[2], input4=scoreInputs[3], type1=inputTypes[0], type2=inputTypes[1], type3=inputTypes[2], type4=inputTypes[3], colour1=colours[0], colour2=colours[1], colour3=colours[2], colour4=colours[3], break1=breaks[0], break2=breaks[1], break3=breaks[2], break4=breaks[3])
 
 @app.route("/end", methods=["POST"])
 def end():
     global inputTypes,colours,players,breaks
     for i in range(len(players)):
-        players[i].score = players[i].score - int(request.form[players[i].name])
+        players[i].score = players[i].score - int(request.form[players[i].idnum])
     players,winners,winscores = libsst.calculateWinner(players)
     listPlayers = []
     listScores = []
