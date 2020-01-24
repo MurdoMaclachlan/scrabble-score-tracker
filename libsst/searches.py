@@ -2,7 +2,6 @@
 def binarySearch(nArray, target):
 
   #sets up the search
-  print(target)
   first = 0
   last = len(nArray)-1
   found = False
