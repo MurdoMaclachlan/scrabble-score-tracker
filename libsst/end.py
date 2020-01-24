@@ -27,11 +27,9 @@ def calculateWinner(players):
       winners.append(players[i].name)
       winids.append(players[i].idnum)
 
-  print(winids)
   for i in range(len(winids)):
 
       #binary search method works because winid list is by its nature sorted
-      print(winids)
       pos = binarySearch(players, winids[i])
       winscores.append(players[pos].score)
 
