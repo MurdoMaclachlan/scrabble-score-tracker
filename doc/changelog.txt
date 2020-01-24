@@ -4,6 +4,20 @@ A "~" indicates something has been edited.
 A ">" indicates an issue has been resolved.
 A "<" indicates an issue has been detected but not resolved.
 
+Version 1.0.1 Patch Notes []:
+  ~Changed the interface to display the round number.
+  >Fixed a bug where the program would only run for one round, regardless of what the user chose.
+
+Version 1.0 Release Notes []:
+  +Completed main website side of project.
+  +Completed main software side of project.
+  ~Changed to Flask for web-interfacing.
+  ~Improved general appearance of some templates.
+  -Removed unnecessary elements from some templates.
+  -Removed unused CSS selectors.
+  >Fixed a bug where injected elements would display as text rather than run as code.
+  >Fixed a bug where the colours of the players would be reversed when displaying the results.
+
 Version 0.3 Beta Notes [21/09/19]:
   +Added classes to store player attributes "name", "colour" and "score".
   +Added a title at the beginning of the project.
