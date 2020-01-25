@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from .searches import binarySearch
 from .sorts import bubbleSort
 
