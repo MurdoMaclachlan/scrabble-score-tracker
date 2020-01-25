@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 def binarySearch(nArray, target):
 
   #sets up the search
