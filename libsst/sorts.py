@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 def bubbleSort(nArray):
   for i in range(len(nArray)-1, 0, -1):
     for j in range(i):
