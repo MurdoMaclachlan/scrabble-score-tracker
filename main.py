@@ -143,7 +143,6 @@ def end():
     winBreaks = []
     dashes = []
     winDashes = []
-
     colours.clear()
     for i in range(4):
         if i <= len(players)-1:
@@ -156,7 +155,6 @@ def end():
             colours.append("")
             listScores.append("")
             dashes.append("")
-
         if i <= len(winners)-1:
             pos = libsst.linearSearch(players, winners[i])
             listWinners.append(players[pos].name + ": ")
@@ -170,7 +168,6 @@ def end():
             winColours.append("")
             winBreaks.append("")
             winDashes.append("")
-
     data = {
         'player1':listPlayers[0],
         'player2':listPlayers[1],
