@@ -75,11 +75,10 @@ def setup():
 @app.route("/game", methods=["POST"])
 def game():
     global playerIds,scoreInputs,inputTypes,colours,players,breaks,roundNumber
-    continueLoop = request.form["continue"]
     roundNumber += 1
     for i in range(len(players)):
         players[i].score = players[i].score + int(request.form[str(players[i].idnum)])
-    if continueLoop == "True":
+    if request.form["continue"] == "True":
         data = {
             'id1':playerIds[0],
             'id2':playerIds[1],
