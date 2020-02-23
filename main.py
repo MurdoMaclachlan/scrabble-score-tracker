@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 from flask import Flask, render_template, request
 import libsst
 
@@ -14,7 +15,7 @@ def index():
 
 @app.route("/setup", methods=["POST"])
 def setup():
-    global i,setupDone,players
+    global i,setupDone,players,fourBreak
     j = int(request.form["number"])
     if setupDone == True:
         libsst.doSetup(players, i)
@@ -25,21 +26,20 @@ def setup():
         scoreInputs = []
         inputTypes = []
         colours = []
-        breaks = []
         roundNumber = 1
+        if len(players) == 4:
+            fourBreak = "</br></br>"
         for i in range(4):
             if i <= len(players)-1:
                 playerIds.append(players[i].idnum)
                 scoreInputs.append(players[i].name)
                 inputTypes.append("number")
                 colours.append(players[i].colour)
-                breaks.append("</br>")
             else:
                 playerIds.append("")
                 scoreInputs.append("")
                 inputTypes.append("hidden")
                 colours.append("")
-                breaks.append("")
         data = {
             'id1':playerIds[0],
             'id2':playerIds[1],
@@ -57,10 +57,7 @@ def setup():
             'colour2':colours[1],
             'colour3':colours[2],
             'colour4':colours[3],
-            'break1':breaks[0],
-            'break2':breaks[1],
-            'break3':breaks[2],
-            'break4':breaks[3],
+            'ifFour':fourBreak,
             'roundNumber':roundNumber
         }
         return render_template("gameRound.html", **data)
@@ -75,10 +72,11 @@ def setup():
 @app.route("/game", methods=["POST"])
 def game():
     global playerIds,scoreInputs,inputTypes,colours,players,breaks,roundNumber
+    continueLoop = request.form["continue"]
     roundNumber += 1
     for i in range(len(players)):
         players[i].score = players[i].score + int(request.form[str(players[i].idnum)])
-    if request.form["continue"] == "True":
+    if continueLoop == "True":
         data = {
             'id1':playerIds[0],
             'id2':playerIds[1],
@@ -96,10 +94,7 @@ def game():
             'colour2':colours[1],
             'colour3':colours[2],
             'colour4':colours[3],
-            'break1':breaks[0],
-            'break2':breaks[1],
-            'break3':breaks[2],
-            'break4':breaks[3],
+            'ifFour':fourBreak,
             'roundNumber':roundNumber
         }
         return render_template("gameRound.html", **data)
@@ -121,10 +116,7 @@ def game():
             'colour2':colours[1],
             'colour3':colours[2],
             'colour4':colours[3],
-            'break1':breaks[0],
-            'break2':breaks[1],
-            'break3':breaks[2],
-            'break4':breaks[3]
+            'ifFour':fourBreak
         }
         return render_template("negativeRound.html", **data)
 
@@ -134,6 +126,7 @@ def end():
     for i in range(len(players)):
         players[i].score = players[i].score - int(request.form[str(players[i].idnum)])
     players,winners,winscores = libsst.calculateWinner(players)
+    breaks = []
     listPlayers = []
     listScores = []
     winColours = []
@@ -148,11 +141,13 @@ def end():
             listPlayers.append(players[i].name + ": ")
             listScores.append(str(players[i].score))
             colours.append(players[i].colour)
+            breaks.append("</br>")
             dashes.append("-")
         else:
             listPlayers.append("")
             colours.append("")
             listScores.append("")
+            breaks.append("")
             dashes.append("")
         if i <= len(winners)-1:
             pos = libsst.linearSearch(players, winners[i])
