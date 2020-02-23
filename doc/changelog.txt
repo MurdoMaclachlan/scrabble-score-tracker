@@ -4,11 +4,28 @@ A "~" indicates something has been edited.
 A ">" indicates an issue has been resolved.
 A "<" indicates an issue has been detected but not resolved.
 
-Version 1.0.1 Patch Notes []:
+                                    ! FILE MAINTENANCE DISCONTINUED ON 23/02/20 !
+
+Version 1.1.1 Patch Notes [23/02/20]:
+  >Fixed players not being required to have a name
+  >Fixed incorrect alignment and formatting of various HTML elements
+
+Version 1.1.0 Update Notes [28/01/20]:
+  ~Changed to identifying players using idnum instead of name
+  ~Improved readability by changing from very long strings to dictionary handling
+  ~Compacted code to improve efficiency
+  -Removed redundant debug print() statements
+  >Fixed a bug where if two players shared a name, one would be overwritten by the other, who was then displayed twice, on the
+   end page
+  >Fixed a bug where the "players" array only ever contained the record of the last player added
+  >Fixed crash on attempting to setup players
+  >Fixed crash on attempting to reach end page (Bad Request error)
+
+Version 1.0.1 Patch Notes [18/10/19]:
   ~Changed the interface to display the round number.
   >Fixed a bug where the program would only run for one round, regardless of what the user chose.
 
-Version 1.0 Release Notes []:
+Version 1.0 Release Notes [17/10/19]:
   +Completed main website side of project.
   +Completed main software side of project.
   ~Changed to Flask for web-interfacing.
