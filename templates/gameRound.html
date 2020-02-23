@@ -23,9 +23,9 @@
             <input type="{{ type3 }}" name="{{ id3 }}" required>
             <p class="{{ colour4 }}">{{ input4 }}</p>
             <input type="{{ type4 }}" name="{{ id4 }}" required>
-            Continue to another round?</br>
+            {{ ifFour|safe }}Continue to another round?</br></br>
             <input type="radio" name="continue" value="True" required>Yes</br>
-            <input type="radio" name="continue" value="False" required>No</br>
+            <input type="radio" name="continue" value="False" required>No</br></br>
             <input type="submit">
           </form>
         </div>
