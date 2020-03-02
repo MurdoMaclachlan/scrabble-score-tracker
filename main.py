@@ -29,6 +29,8 @@ def setup():
         roundNumber = 1
         if len(players) == 4:
             fourBreak = "</br></br>"
+        else:
+            fourBreak = ""
         for i in range(4):
             if i <= len(players)-1:
                 playerIds.append(players[i].idnum)
