@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 from flask import Flask, render_template, request
 import libsst
 
@@ -8,18 +7,28 @@ app = Flask(__name__)
 @app.route("/index")
 def index():
     global i,setupDone,players
+
+    #sets up essential initial variables
     setupDone = False
     i = 1
     players = []
+
+    #renders index page
     return render_template("index.html")
 
 @app.route("/setup", methods=["POST"])
 def setup():
     global i,setupDone,players,fourBreak
+
+    #receives how many players will be entered
     j = int(request.form["number"])
+
+    #if initial pass is completed, adds player data to array of records
     if setupDone == True:
         libsst.doSetup(players, i)
         i += 1
+
+    #if all players added, sets up variables required for rendering game page
     if i > j:
         global playerIds,scoreInputs,inputTypes,colours,breaks,roundNumber
         playerIds = []
@@ -63,6 +72,8 @@ def setup():
             'roundNumber':roundNumber
         }
         return render_template("gameRound.html", **data)
+
+    #if there are still players to be setup, rerenders setup page
     else:
         setupDone = True
         data = {
@@ -74,8 +85,12 @@ def setup():
 @app.route("/game", methods=["POST"])
 def game():
     global playerIds,scoreInputs,inputTypes,colours,players,breaks,roundNumber
+
+    #updates tracking variables, such as round number and whether or not to continue to another round
     continueLoop = request.form["continue"]
     roundNumber += 1
+
+    #updates player scores
     for i in range(len(players)):
         players[i].score = players[i].score + int(request.form[str(players[i].idnum)])
     if continueLoop == "True":
@@ -125,6 +140,8 @@ def game():
 @app.route("/end", methods=["POST"])
 def end():
     global inputTypes,colours,players,breaks
+
+    #updates player scores with negatives, then calculates the winner(s)
     for i in range(len(players)):
         players[i].score = players[i].score - int(request.form[str(players[i].idnum)])
     players,winners,winscores = libsst.calculateWinner(players)
