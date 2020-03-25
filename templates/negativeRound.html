@@ -12,6 +12,8 @@
   <body>
     <h1> Scrabble Score Tracker </h1>
       <p>Please input, as positives, the negatives to be taken away from each player's score (enter 0 if no negative).</p>
+
+        <!-- the form for inputting the negative scores; variables contained within {{ }} are dependent on Flask inputs from the main program -->
         <div class="form">
           <form action="/end" method="post">
             <input type="hidden" name="loop" value={{ loop }}>
