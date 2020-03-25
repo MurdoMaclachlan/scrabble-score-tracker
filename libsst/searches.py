@@ -25,7 +25,10 @@ def binarySearch(nArray, target):
 
 def linearSearch(nArray, target):
     pos = 0
+
+    #goes through array from the beginning until it finds the target
     for i in range(len(nArray)):
         if nArray[i].name == target:
             pos = i
+            break
     return pos
