@@ -11,6 +11,8 @@
   </head>
   <body>
     <h1> Scrabble Score Tracker </h1>
+
+      <!-- displays all scores; variables contained within {{ }} are dependent on Flask inputs from the main program -->
       <p>RESULTS:</br></br>
         All Scores:</br>
         {{ dash1 }}<span class={{ colour1 }}>{{ player1 }}</span>{{ score1 }}{{ break1|safe }}
@@ -18,6 +20,8 @@
         {{ dash3 }}<span class={{ colour3 }}>{{ player3 }}</span>{{ score3 }}{{ break3|safe }}
         {{ dash4 }}<span class={{ colour4 }}>{{ player4 }}</span>{{ score4 }}{{ break4|safe }}
       </p>
+
+      <!-- displays the winners; variables contained within {{ }} are dependent on Flask inputs from the main program -->
       <p>
         Winners:</br>
         {{ wdash1 }}<span class={{ wcolour1 }}>{{ winner1 }}</span>{{ wscore1 }}{{ winbr1|safe }}
