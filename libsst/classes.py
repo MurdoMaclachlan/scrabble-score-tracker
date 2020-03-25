@@ -1,3 +1,4 @@
+#defines structure of "Players" class
 class Players():
   def __init__(self, name, colour, score, i):
     self.name = name
