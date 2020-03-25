@@ -5,7 +5,8 @@ def bubbleSort(nArray):
       #looks for the next number being larger than the current number, and if so, swaps them
       if nArray[j].score > nArray[j+1].score:
 
-        temp = nArray[j] #temporary variable prevents numbers from being lost
+        #temporary variable prevents numbers from being lost
+        temp = nArray[j]
 
         nArray[j] = nArray[j+1]
         nArray[j+1] = temp
