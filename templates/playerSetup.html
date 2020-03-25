@@ -12,6 +12,8 @@
   <body>
     <h1> Scrabble Score Tracker </h1>
         <p> Please enter the details for player {{ i }}. </p>
+
+        <!-- the form for player setup; variables contained within {{ }} are dependent on Flask inputs from the main program -->
         <div class="form">
           <form action="/setup" method="post">
             <input type="hidden" name="number" value={{ j }}>
