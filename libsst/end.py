@@ -6,11 +6,9 @@ def calculateWinner(players):
   winners = []
   winids = []
   winscores = []
-
-  #searches list for the player with the highest score
-
   players = bubbleSort(players)
 
+  #searches list for the player with the highest score
   for i in range(len(players)):
 
     #if multiple players have the highest score, all are added as winners
